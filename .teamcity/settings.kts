@@ -56,7 +56,7 @@ object CompileAuthServer : BuildType({
     artifactRules = "authorization-service/target/*.jar => target"
 
     vcs {
-        root(DslContext.settingsRoot,  "+:authorization-service")
+        root(DslContext.settingsRoot, "+:authorization-service")
     }
 
     steps {
