@@ -36,7 +36,7 @@ project {
     buildType(CompileCalcServer)
     buildType(BuildDockerImageCalculatorServer)
     buildType(DeployCalcServer)
-    buildType(Build)
+    buildType(CompileAuthServer)
     buildType(BuildDockerImageAuthServer)
 
     features {
@@ -50,13 +50,13 @@ project {
     }
 }
 
-object Build : BuildType({
+object CompileAuthServer : BuildType({
     name = "Compile Auth Server"
 
     artifactRules = "authorization-service/target/*.jar => target"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.settingsRoot,  "+:authorization-service")
     }
 
     steps {
@@ -67,11 +67,29 @@ object Build : BuildType({
     }
 })
 
+object CompileCalcServer : BuildType({
+    name = "Compile Calc Server"
+
+    artifactRules = "calculator-service/target/*.jar => target"
+
+    vcs {
+        root(DslContext.settingsRoot,"+:calculator-service")
+    }
+
+    steps {
+        maven {
+            goals = "clean package"
+            pomLocation = "calculator-service/pom.xml"
+        }
+    }
+})
+
+
 object BuildDockerImageAuthServer : BuildType({
     name = "Build Docker Image (Auth Server)"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.settingsRoot,  "+:authorization-service")
     }
 
     steps {
@@ -99,7 +117,7 @@ object BuildDockerImageAuthServer : BuildType({
     }
 
     dependencies {
-        dependency(Build) {
+        dependency(CompileAuthServer) {
             snapshot {
             }
 
@@ -114,7 +132,7 @@ object BuildDockerImageCalculatorServer : BuildType({
     name = "Build Docker Image (CalculatorServer)"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.settingsRoot,"+:calculator-service")
     }
 
     steps {
@@ -153,22 +171,6 @@ object BuildDockerImageCalculatorServer : BuildType({
     }
 })
 
-object CompileCalcServer : BuildType({
-    name = "Compile Calc Server"
-
-    artifactRules = "calculator-service/target/*.jar => target"
-
-    vcs {
-        root(DslContext.settingsRoot)
-    }
-
-    steps {
-        maven {
-            goals = "clean package"
-            pomLocation = "calculator-service/pom.xml"
-        }
-    }
-})
 
 object DeployAuthServer : BuildType({
     name = "Deploy Auth Server"
@@ -176,7 +178,7 @@ object DeployAuthServer : BuildType({
     artifactRules = "authorization-service/target/*.jar => target"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.settingsRoot,  "+:authorization-service")
     }
 
     steps {
@@ -202,7 +204,7 @@ object DeployCalcServer : BuildType({
     artifactRules = "authorization-service/target/*.jar => target"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(DslContext.settingsRoot,"+:calculator-service")
     }
 
     steps {
