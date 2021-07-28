@@ -10,4 +10,7 @@ class CalculatorServiceApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void contextLoads2() {
+	}
 }
