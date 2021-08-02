@@ -50,7 +50,7 @@ public class SomeIntegrationTest {
         try (InputStream is = SomeIntegrationTest.class.getResourceAsStream("/sample-mp4-file.mp4")) {
             Files.copy(is, path.resolve("selenium_chrome_recording.mp4"));
         }
-        Files.write(path.resolve("application.log"), "This is my log".getBytes());
+        Files.write(path.resolve("application.log"), hello.getBytes());
         Thread.sleep(1000);
         assertEquals(1,1);
     }
