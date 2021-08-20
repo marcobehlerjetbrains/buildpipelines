@@ -59,5 +59,6 @@ public class SomeIntegrationTest {
         assertEquals(1,1);
 
         System.out.println("test");
+        System.out.println("test2");
     }
 }
