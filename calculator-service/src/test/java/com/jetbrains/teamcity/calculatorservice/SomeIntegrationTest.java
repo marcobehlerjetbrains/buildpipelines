@@ -57,5 +57,7 @@ public class SomeIntegrationTest {
         Files.write(path.resolve("application.log"), hello.getBytes());
         Thread.sleep(1000);
         assertEquals(1,1);
+
+        System.out.println("test");
     }
 }
