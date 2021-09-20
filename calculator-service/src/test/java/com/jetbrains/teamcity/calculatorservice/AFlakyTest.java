@@ -14,4 +14,10 @@ public class AFlakyTest {
     }
 
 
+    @Test
+    public void nothing() {
+        // jira commit
+        assertEquals(0,0);
+    }
+
 }
