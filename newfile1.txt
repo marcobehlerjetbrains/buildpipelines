@@ -3,3 +3,4 @@ adding a line
 addressing the issue #1
 another commit
 dev branch
+this shouldnt be in teamcity anymore
